@@ -1,7 +1,6 @@
 services:
   postgres:
     image: postgres:16
-    container_name: plume_dbt_pg
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
