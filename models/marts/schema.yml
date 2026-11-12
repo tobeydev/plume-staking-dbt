@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: fct_plume_staking_daily
+    description: >
+      Daily fact table of Plume staking. Grain: one row per day.
+      Read by dashboards and downstream analysis.
+    columns:
+      - name: staking_date
+        description: Snapshot date (grain of the table).
+        data_tests: [not_null, unique]
+      - name: staking_month
+        description: First day of the month of staking_date.
+        data_tests: [not_null]
+      - name: amount_staked_plume
+        description: Total PLUME staked.
+        data_tests: [not_null]
+      - name: amount_staked_usd
+        description: USD value of staked PLUME.
+        data_tests: [not_null]
+      - name: stakers_count
+        description: Number of distinct stakers.
+        data_tests: [not_null]
+      - name: implied_plume_price_usd
+        description: Implied PLUME price (USD value / token amount).
+        data_tests: [not_null]
+      - name: avg_stake_per_staker_plume
+        description: Average PLUME staked per staker.
+        data_tests: [not_null]
+      - name: net_stake_change_plume
+        description: Day-over-day change in staked PLUME.
+        data_tests: [not_null]
+      - name: net_stake_change_pct
+        description: Day-over-day change in staked PLUME, percent.
+        data_tests: [not_null]
+      - name: net_staker_change
+        description: Day-over-day change in staker count.
+        data_tests: [not_null]
+      - name: net_flow_direction
+        description: Classification of the day's net staking flow.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['baseline', 'inflow', 'outflow', 'flat']
+      - name: staker_trend
+        description: Direction of day-over-day staker change.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['baseline', 'growing', 'shrinking', 'stable']
+      - name: move_size
+        description: Whether the day's stake change was large or normal.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['baseline', 'large', 'normal']
+      - name: net_stake_change_7d_avg_plume
+        description: Trailing 7-day average of the daily net stake change.
+        data_tests: [not_null]

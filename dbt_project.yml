@@ -1,0 +1,19 @@
+name: analytics
+version: "1.0.0"
+config-version: 2
+profile: analytics
+
+model-paths: ["models"]
+
+vars:
+  flow_threshold_pct: 0.5
+  large_move_pct: 5
+
+models:
+  analytics:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: stg_plume_staking
+    description: Typed and renamed daily Plume staking snapshot. One row per day.
+    columns:
+      - name: staking_date
+        description: Snapshot date.
+        data_tests: [not_null, unique]
+      - name: amount_staked_plume
+        description: Total PLUME staked, in tokens.
+        data_tests: [not_null]
+      - name: amount_staked_usd
+        description: USD value of the staked PLUME.
+        data_tests: [not_null]
+      - name: amount_staked_growth_24h_pct
+        description: Provider-reported 24h growth of staked amount, in percent.
+        data_tests: [not_null]
+      - name: amount_staked_growth_7d_pct
+        description: Provider-reported 7d growth of staked amount, in percent. Zero-filled at the start of the series.
+        data_tests: [not_null]
+      - name: amount_staked_growth_30d_pct
+        description: Provider-reported 30d growth of staked amount, in percent. Zero-filled at the start of the series.
+        data_tests: [not_null]
+      - name: stakers_count
+        description: Number of distinct stakers.
+        data_tests: [not_null]
+      - name: stakers_growth_24h_pct
+        description: Provider-reported 24h growth in stakers, in percent.
+        data_tests: [not_null]
+      - name: stakers_growth_7d_pct
+        description: Provider-reported 7d growth in stakers, in percent.
+        data_tests: [not_null]
+      - name: stakers_growth_30d_pct
+        description: Provider-reported 30d growth in stakers, in percent.
+        data_tests: [not_null]

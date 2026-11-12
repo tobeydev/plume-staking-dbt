@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: int_plume_staking_daily
+    description: >
+      Daily staking with recomputed day-over-day changes, implied price,
+      average stake per staker and flow classifications. One row per day.
+    columns:
+      - name: staking_date
+        description: Snapshot date.
+        data_tests: [not_null, unique]
+      - name: staking_month
+        description: First day of the month of staking_date.
+        data_tests: [not_null]
+      - name: amount_staked_plume
+        description: Total PLUME staked.
+        data_tests: [not_null]
+      - name: amount_staked_usd
+        description: USD value of staked PLUME.
+        data_tests: [not_null]
+      - name: stakers_count
+        description: Number of distinct stakers.
+        data_tests: [not_null]
+      - name: implied_plume_price_usd
+        description: amount_staked_usd / amount_staked_plume.
+        data_tests: [not_null]
+      - name: avg_stake_per_staker_plume
+        description: amount_staked_plume / stakers_count.
+        data_tests: [not_null]
+      - name: net_stake_change_plume
+        description: Day-over-day change in staked PLUME (0 on the baseline day).
+        data_tests: [not_null]
+      - name: net_stake_change_pct
+        description: Day-over-day change in staked PLUME, percent (0 on the baseline day).
+        data_tests: [not_null]
+      - name: net_staker_change
+        description: Day-over-day change in staker count (0 on the baseline day).
+        data_tests: [not_null]
+      - name: net_flow_direction
+        description: inflow / outflow if the daily change exceeds flow_threshold_pct, else flat; baseline for the first day.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['baseline', 'inflow', 'outflow', 'flat']
+      - name: staker_trend
+        description: Direction of the day-over-day change in stakers; baseline for the first day.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['baseline', 'growing', 'shrinking', 'stable']
+      - name: move_size
+        description: large if abs daily change >= large_move_pct, else normal; baseline for the first day.
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['baseline', 'large', 'normal']
+      - name: net_stake_change_7d_avg_plume
+        description: Trailing 7-day average of net_stake_change_plume.
+        data_tests: [not_null]

@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: plume
+    description: Raw data loaded by extract/load_plume_staking.py.
+    schema: public
+    tables:
+      - name: raw_plume_staking
+        description: Daily Plume staking snapshot, one row per day, all columns TEXT.
+        columns:
+          - name: date
+            description: Snapshot date (YYYY-MM-DD) as text.
+          - name: amount_staked
+            description: Total PLUME staked (tokens).
+          - name: amount_staked_usd
+            description: USD value of the staked amount.
+          - name: stakers
+            description: Number of distinct stakers.
